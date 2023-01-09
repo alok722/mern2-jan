@@ -1,7 +1,9 @@
 // const http = require('http');
 require('dotenv').config();
 const PORT = 8080;
+const DB_URI = "mongodb://127.0.0.1:27017/mern";
 const express = require('express');
+const mongoose = require('mongoose');
 
 // const server = http.createServer((req, res) => {
 //     // if (req.url === '/status') {
@@ -78,6 +80,11 @@ const app = express();
 const currencyRoutes = require('./routes/currencies.routes');
 const userRoutes = require('./routes/users.routes');
 const { verifyAuth } = require('./middleware/verifyAuth');
+
+mongoose
+    .connect(DB_URI)
+    .then(() => console.log('DB Connected!'))
+    .catch(error => console.log('Error in connecting DB', error))
 
 app.use(verifyAuth);
 
