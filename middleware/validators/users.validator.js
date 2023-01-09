@@ -5,9 +5,14 @@ const schema = Joi.object().keys({
     gender: Joi.string().valid("male", "female"),
 });
 
-const getQueryErrors = (data) => {
-    const result = schema.validate(data);
-    return result.error;
-}
+const validateSearchQuery = (req, res, next) => {
+    const { gender, age } = req.query;
+    const { error } = schema.validate({ gender, age });
 
-module.exports = { getQueryErrors }
+    if (error) {
+        return res.status(422).json(error);
+    }
+    next();
+};
+
+module.exports = { validateSearchQuery }

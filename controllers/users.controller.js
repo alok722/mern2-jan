@@ -1,5 +1,4 @@
 const { data } = require("../DB/user.json");
-const { getQueryErrors } = require('../middleware/validators/users.validator')
 
 const getAllUsers = (req, res) => {
     return res.json(data);
@@ -16,13 +15,8 @@ const getUsersByUuid = (req, res) => {
 };
 
 const searchUsersByQuery = (req, res) => {
+    console.log(req.test)
     const { gender, age } = req.query;
-
-    const error = getQueryErrors({ gender, age });
-
-    if (error) {
-        return res.status(422).json(error)
-    }
 
     if (gender && age) {
         const results = data.filter(
