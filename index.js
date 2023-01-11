@@ -79,6 +79,7 @@ const app = express();
 
 const currencyRoutes = require('./routes/currencies.routes');
 const userRoutes = require('./routes/users.routes');
+const blogRoutes = require('./routes/blogs.routes');
 const { verifyAuth } = require('./middleware/verifyAuth');
 
 mongoose
@@ -90,5 +91,6 @@ app.use(verifyAuth);
 
 app.use('/api/currencies', currencyRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/blogs', blogRoutes);
 
 app.listen(PORT, () => console.log(`Listening on Port: ${PORT}`))
