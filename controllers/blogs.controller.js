@@ -1,11 +1,20 @@
 const Blogs = require("../models/blogs.model");
-const { findAllBlogs } = require("../services/blogs.service")
+const BlogService = require('../services/blogs.service')
+
+const BlogServiceInstance = new BlogService();
 
 const createNewBlog = async (req, res) => {
-    const newBlog = new Blogs(req.body);
-    const result = await newBlog.save();
-    res.status(201).json(result);
-}
+    try {
+        const body = req.body;
+        const newBlog = await BlogServiceInstance.create(body);
+        res.json(newBlog);
+    } catch (error) {
+        res.status(500).json({
+            message: "Couldn't create new blog post. Please try again",
+            error,
+        });
+    }
+};
 
 const searchBlogs = async (req, res) => {
     try {
@@ -24,7 +33,7 @@ const searchBlogs = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
     try {
-        const blogs = await findAllBlogs();
+        const blogs = await BlogServiceInstance.find();
         return res.status(200).json(blogs)
     } catch (error) {
         res.status(500).json({ message: "Couldn't fetch data" })

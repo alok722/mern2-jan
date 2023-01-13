@@ -1,8 +1,16 @@
 const Blogs = require("../models/blogs.model");
 
-const findAllBlogs = async () => {
-    const blogs = await Blogs.find({});
-    return blogs;
+class BlogService {
+    find = async () => {
+        const allBlogs = await Blogs.find({});
+        return allBlogs;
+    };
+
+    create = async (body) => {
+        const newDoc = new Blogs(body);
+        const savedDoc = await newDoc.save();
+        return savedDoc;
+    };
 }
 
-module.exports = { findAllBlogs }
+module.exports = BlogService;
